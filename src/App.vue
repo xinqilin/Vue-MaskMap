@@ -7,7 +7,7 @@
             <div class="form-group d-flex">
               <label for="cityName" class="mr-2 col-form-label text-right">縣市</label>
               <div class="flex-fill">
-                <select id="cityName" class="form-control" v-model="select.checkCity">
+                <select id="cityName" class="form-control" v-model="checkCity" @change="updateMap">
                   <option value="">-- Select One --</option>
                   <option v-for="c in Taiwan" :key="c.CityName" :value="c.CityName">
                     {{c.CityName}}</option>
@@ -84,9 +84,7 @@ export default {
   data: () => ({
     medicineData: [],
     Taiwan,
-    select: {
-      checkCity: '臺北市',
-    },
+    checkCity: '',
   }),
   components: {
 
@@ -94,13 +92,13 @@ export default {
   methods: {
     updateMap() {
       const pharmacies = this.medicineData.filter((pharmacy) => (
-        pharmacy.properties.county === this.select.checkCity));
+        pharmacy.properties.county === this.checkCity));
 
       pharmacies.forEach((pharmacy) => {
         L.marker([
           pharmacy.geometry.coordinates[1],
           pharmacy.geometry.coordinates[0],
-        ]).addTo(osmMap);
+        ]).addTo(osmMap).bindPopup(`藥局名稱: ${pharmacy.properties.name}`);
       });
     },
   },
@@ -115,7 +113,7 @@ export default {
 
     osmMap = L.map('map', {
       center: [25.03, 121.55],
-      zoom: 15,
+      zoom: 8,
     });
 
 
