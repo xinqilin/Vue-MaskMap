@@ -7,7 +7,11 @@
             <div class="form-group d-flex">
               <label for="cityName" class="mr-2 col-form-label text-right">縣市</label>
               <div class="flex-fill">
-                <select id="cityName" class="form-control"> </select>
+                <select id="cityName" class="form-control" v-model="select.checkCity">
+                  <option value="">-- Select One --</option>
+                  <option v-for="c in Taiwan" :key="c.CityName" :value="c.CityName">
+                    {{c.CityName}}</option>
+                </select>
               </div>
             </div>
             <div class="form-group d-flex">
@@ -69,6 +73,7 @@
 
 <script>
 import L from 'leaflet';
+import Taiwan from './assets/Taiwan.json';
 
 let osmMap = {};
 
@@ -78,15 +83,33 @@ export default {
   name: 'App',
   data: () => ({
     medicineData: [],
+    Taiwan,
+    select: {
+      checkCity: '臺北市',
+    },
   }),
   components: {
 
+  },
+  methods: {
+    updateMap() {
+      const pharmacies = this.medicineData.filter((pharmacy) => (
+        pharmacy.properties.county === this.select.checkCity));
+
+      pharmacies.forEach((pharmacy) => {
+        L.marker([
+          pharmacy.geometry.coordinates[1],
+          pharmacy.geometry.coordinates[0],
+        ]).addTo(osmMap);
+      });
+    },
   },
   mounted() {
     const url = 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json';
     this.axios.get(url).then((response) => {
       console.log(response);
       this.medicineData = response.data.features;
+      this.updateMap();
     });
 
 
@@ -100,6 +123,8 @@ export default {
       maxZoom: 18,
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     }).addTo(osmMap);
+
+    // L.marker().addTo(osmMap);
   },
 
 };
