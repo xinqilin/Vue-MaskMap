@@ -25,9 +25,9 @@
 ## 遠端資料
 #### API 路徑：
 
-<a href="https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json">https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json</a>
+`<a href="https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json">https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json</a>`
 #### 台灣縣市 JSON: 
-<a href="https://github.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON">https://github.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON</a>
+`<a href="https://github.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON">https://github.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON</a>`
 
 ## 藥局JSON
 `EX:`
@@ -117,6 +117,7 @@ JS 用import的 (也可以跟CSS依樣直接放在index.html內)<br>
 
 *快速開始<br>
 <a href="https://leafletjs.com/reference-1.6.0.html#map-example">https://leafletjs.com/reference-1.6.0.html#map-example</a>
+<br>
 *詳細介紹<br>
 <a href="https://leafletjs.com/reference-1.6.0.html#map-example">https://leafletjs.com/reference-1.6.0.html#map-example</a>
 
