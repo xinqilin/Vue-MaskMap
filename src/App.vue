@@ -49,6 +49,7 @@
   </div>
 </template>
 
+
 <style lang="scss">
 @import "bootstrap/scss/bootstrap.scss";
 #map {
@@ -65,3 +66,22 @@
   }
 }
 </style>
+
+<script>
+export default {
+  name: 'App',
+  data: () => ({
+
+  }),
+  components: {
+
+  },
+  mounted() {
+    const url = 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json';
+    this.axios.get(url).then((response) => {
+      console.log(response);
+    });
+  },
+
+};
+</script>
