@@ -107,7 +107,7 @@ export default {
         <small>最後更新時間: ${pharmacy.properties.updated}</small>
         `);
       });
-      this.panTo(pharmacies[0]);
+      this.panTo(pharmacies[1]);
     },
     removeMapMarker() {
       osmMap.eachLayer((layer) => {
