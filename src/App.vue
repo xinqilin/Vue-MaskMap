@@ -7,7 +7,8 @@
             <div class="form-group d-flex">
               <label for="cityName" class="mr-2 col-form-label text-right">縣市</label>
               <div class="flex-fill">
-                <select id="cityName" class="form-control" v-model="checkCity" @change="updateMap">
+                <select id="cityName" class="form-control" v-model="checkCity"
+                @change="removeMapMarker(); updateMap();">
                   <option value="">-- Select One --</option>
                   <option v-for="c in Taiwan" :key="c.CityName" :value="c.CityName">
                     {{c.CityName}}</option>
@@ -106,6 +107,18 @@ export default {
         <small>最後更新時間: ${pharmacy.properties.updated}</small>
         `);
       });
+      this.panTo(pharmacies[0]);
+    },
+    removeMapMarker() {
+      osmMap.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          osmMap.removeLayer(layer);
+        }
+      });
+    },
+    penTo(item) {
+      // const icon = item.mask_adult || item.mask_child ? icons.green : icons.grey;
+      osmMap.panTo([item.geometry.coordinates[1], item.geometry.coordinates[0]]);
     },
   },
   mounted() {
@@ -119,7 +132,7 @@ export default {
 
     osmMap = L.map('map', {
       center: [25.03, 121.55],
-      zoom: 8,
+      zoom: 15,
     });
 
 
