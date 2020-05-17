@@ -98,7 +98,13 @@ export default {
         L.marker([
           pharmacy.geometry.coordinates[1],
           pharmacy.geometry.coordinates[0],
-        ]).addTo(osmMap).bindPopup(`藥局名稱: ${pharmacy.properties.name}`);
+        ]).addTo(osmMap).bindPopup(`
+        <strong>${pharmacy.properties.name}</strong><br>
+         口罩剩餘：<strong>成人 - ${pharmacy.properties.mask_adult ? `${pharmacy.properties.mask_adult} 個` : '未取得資料'}/ 兒童 - ${pharmacy.properties.mask_child ? `${pharmacy.properties.mask_child} 個` : '未取得資料'}</strong><br>
+        地址: <a href="https://www.google.com.tw/maps/place/${pharmacy.properties.address}" target="_blank">${pharmacy.properties.address}</a><br>
+        電話: ${pharmacy.properties.phone}<br>
+        <small>最後更新時間: ${pharmacy.properties.updated}</small>
+        `);
       });
     },
   },
