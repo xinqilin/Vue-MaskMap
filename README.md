@@ -93,5 +93,45 @@ Vue.use(VueAxios, axios);
   console.log(response.data)
 })
 ```
+# 使用OSM open street map + leafletjs 套件
+
+`https://leafletjs.com/`
+`npm install leaflet`
+還需要額外加上leaflet 的css 
+`在index.html內直接引入(比較快)`
+```html
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+```
+還有JS
+JS 用import的 (也可以跟CSS依樣直接放在index.html內)
+`import L from 'leaflet';`
+```js
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+```
+
+*快速開始
+`https://leafletjs.com/reference-1.6.0.html#map-example`
+*詳細介紹
+`https://leafletjs.com/reference-1.6.0.html#map-example`
+
+*使用
+```js
+   osmMap = L.map('map', {
+      center: [25.03, 121.55],
+      zoom: 15,
+    });
+
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+    }).addTo(osmMap);
+  },
+```
 
 

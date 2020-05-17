@@ -68,10 +68,16 @@
 </style>
 
 <script>
+import L from 'leaflet';
+
+let osmMap = {};
+
+console.log(L);
+
 export default {
   name: 'App',
   data: () => ({
-
+    medicineData: [],
   }),
   components: {
 
@@ -80,7 +86,20 @@ export default {
     const url = 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json';
     this.axios.get(url).then((response) => {
       console.log(response);
+      this.medicineData = response.data.features;
     });
+
+
+    osmMap = L.map('map', {
+      center: [25.03, 121.55],
+      zoom: 15,
+    });
+
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+    }).addTo(osmMap);
   },
 
 };
