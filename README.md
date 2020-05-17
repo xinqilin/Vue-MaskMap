@@ -25,9 +25,9 @@
 ## 遠端資料
 #### API 路徑：
 
-`https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json`
+<a href="https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json">https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json</a>
 #### 台灣縣市 JSON: 
-`https://github.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON`
+<a href="https://github.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON">https://github.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON</a>
 
 ## 藥局JSON
 `EX:`
@@ -62,7 +62,7 @@
 ```
 
 ## 加套件2 - vue axios
-`API: https://www.npmjs.com/package/vue-axios`
+`API:`<a href="https://www.npmjs.com/package/vue-axios">https://www.npmjs.com/package/vue-axios</a>
 
 `npm install --save axios vue-axios`
 *進入點 (main.js) 引入<br>
@@ -95,7 +95,7 @@ Vue.use(VueAxios, axios);
 ```
 # 使用OSM open street map + leafletjs 套件
 
-`https://leafletjs.com/`<br>
+<a>https://leafletjs.com/</a><br>
 `npm install leaflet`<br>
 還需要額外加上leaflet 的css <br>
 `在index.html內直接引入(比較快)`
@@ -116,9 +116,9 @@ JS 用import的 (也可以跟CSS依樣直接放在index.html內)<br>
 ```
 
 *快速開始<br>
-`https://leafletjs.com/reference-1.6.0.html#map-example`
+<a href="https://leafletjs.com/reference-1.6.0.html#map-example">https://leafletjs.com/reference-1.6.0.html#map-example</a>
 *詳細介紹<br>
-`https://leafletjs.com/reference-1.6.0.html#map-example`
+<a href="https://leafletjs.com/reference-1.6.0.html#map-example">https://leafletjs.com/reference-1.6.0.html#map-example</a>
 
 *使用
 ```js
