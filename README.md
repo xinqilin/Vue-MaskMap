@@ -1,33 +1,26 @@
-# mapmask
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# maskMap-vue.js
+## maskMap-vue.js
 ---------------------------------
 ```
 vue --version 看版本
 若無，則  npm install -g @vue/cli 建立
 vue update -g @vue/cli 更新 vue-cli 版本
 ```
+###開始
+vue create name
+
+選手動 > 多選一個scss
+
+###加套件
+#bootstrap
+```
+npm install pluginsName
+```
+#引用
+```
+'根目錄為node_modules'
+
+===> @import 'bootstrap/.....';  
+```
+
 
 

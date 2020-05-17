@@ -1,17 +1,14 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button class="btn btn-primary">button</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
   },
 };
 </script>
@@ -25,4 +22,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+</style>
+<style lang="scss">
+@import 'bootstrap/scss/bootstrap.scss';
 </style>
