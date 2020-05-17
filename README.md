@@ -65,15 +65,15 @@
 `API: https://www.npmjs.com/package/vue-axios`
 
 `npm install --save axios vue-axios`
->進入點 (main.js) 引入
+*進入點 (main.js) 引入<br>
 ```js
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 ```
 
-*注意: axios屬外部套件 外部套件要放在內部套件前
-內部套件(自己寫的) 往後放，
-放完後要引用剛剛import的東西
+*注意: axios屬外部套件 外部套件要放在內部套件前<br>
+內部套件(自己寫的) 往後放，<br>
+放完後要引用剛剛import的東西<br>
 
 ```js 
 Vue.use(VueAxios, axios);
@@ -95,18 +95,19 @@ Vue.use(VueAxios, axios);
 ```
 # 使用OSM open street map + leafletjs 套件
 
-`https://leafletjs.com/`
-`npm install leaflet`
-還需要額外加上leaflet 的css 
+`https://leafletjs.com/`<br>
+`npm install leaflet`<br>
+還需要額外加上leaflet 的css <br>
 `在index.html內直接引入(比較快)`
 ```html
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
 ```
-還有JS
-JS 用import的 (也可以跟CSS依樣直接放在index.html內)
-`import L from 'leaflet';`
+還有JS<br>
+<br>
+JS 用import的 (也可以跟CSS依樣直接放在index.html內)<br>
+`import L from 'leaflet';`<br>
 ```js
 <!-- Make sure you put this AFTER Leaflet's CSS -->
  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
@@ -114,9 +115,9 @@ JS 用import的 (也可以跟CSS依樣直接放在index.html內)
    crossorigin=""></script>
 ```
 
-*快速開始
+*快速開始<br>
 `https://leafletjs.com/reference-1.6.0.html#map-example`
-*詳細介紹
+*詳細介紹<br>
 `https://leafletjs.com/reference-1.6.0.html#map-example`
 
 *使用
