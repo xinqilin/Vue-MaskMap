@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+@theme {
+  --color-highlight: #e9ffe3;
+}
