@@ -126,7 +126,8 @@ export const usePharmacyStore = defineStore('pharmacy', () => {
       if (!PHARMACY_API_URL) {
         throw new Error('缺少 VITE_PHARMACY_API_URL 設定')
       }
-      const data = await ofetch<PharmacyGeoJSON>(PHARMACY_API_URL)
+      // The source serves JSON as text/plain, which ofetch would otherwise return as a string.
+      const data = await ofetch<PharmacyGeoJSON>(PHARMACY_API_URL, { responseType: 'json' })
       if (!Array.isArray(data?.features)) {
         throw new Error('藥局資料格式不正確')
       }

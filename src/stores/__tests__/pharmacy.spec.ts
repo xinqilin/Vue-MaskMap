@@ -1,11 +1,19 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { ofetch } from 'ofetch'
 import { usePharmacyStore } from '@/stores/pharmacy'
 import type { PharmacyFeature, PharmacyProperties } from '@/types'
 
-vi.mock('ofetch', () => ({ ofetch: vi.fn() }))
 vi.mock('@/config', () => ({ PHARMACY_API_URL: 'https://example.test/points.json' }))
+
+// raw.githubusercontent.com serves JSON as text/plain; mirror that here.
+function respondWith(body: unknown) {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async () => new Response(JSON.stringify(body), {
+      headers: { 'content-type': 'text/plain; charset=utf-8' },
+    })),
+  )
+}
 
 function feature(
   props: Partial<PharmacyProperties>,
@@ -36,7 +44,7 @@ function feature(
 }
 
 async function loadStore(features: PharmacyFeature[]) {
-  vi.mocked(ofetch).mockResolvedValueOnce({ type: 'FeatureCollection', features })
+  respondWith({ type: 'FeatureCollection', features })
   const store = usePharmacyStore()
   await store.fetchPharmacies()
   return store
@@ -47,7 +55,10 @@ const ids = (features: readonly PharmacyFeature[]) => features.map((f) => f.prop
 describe('usePharmacyStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    vi.mocked(ofetch).mockReset()
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 
   it('strips HTML tags and coerces invalid counts when loading', async () => {
@@ -63,7 +74,7 @@ describe('usePharmacyStore', () => {
   })
 
   it('reports an error when the payload has no features array', async () => {
-    vi.mocked(ofetch).mockResolvedValueOnce({})
+    respondWith({})
     const store = usePharmacyStore()
     await store.fetchPharmacies()
 
