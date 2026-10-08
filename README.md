@@ -24,9 +24,11 @@
 | [Vue](https://vuejs.org) | 3.x | UI 框架（Composition API + `<script setup>`） |
 | [TypeScript](https://www.typescriptlang.org) | 6.x | 型別系統（strict mode） |
 | [Tailwind CSS](https://tailwindcss.com) | 4.x | CSS 框架（CSS-first config） |
-| [Pinia](https://pinia.vuejs.org) | 3.x | 狀態管理 |
+| [Pinia](https://pinia.vuejs.org) | 4.x | 狀態管理 |
 | [Leaflet](https://leafletjs.com) | 1.9.x | 互動式地圖 |
 | [ofetch](https://github.com/unjs/ofetch) | 1.x | HTTP 客戶端（取代 axios） |
+| [Vitest](https://vitest.dev) | 5.x | 單元測試（happy-dom） |
+| [pnpm](https://pnpm.io) | 12.x | 套件管理（`packageManager` 釘選，由 corepack 切換） |
 
 ## 畫面說明
 
@@ -60,7 +62,7 @@
 - 定位功能：「定位我的位置」按鈕 + 自動切換到最近藥局所在區域
 - Loading 狀態與錯誤處理（含重試按鈕）
 - RWD 響應式布局，手機版可開啟底部清單面板
-- 基本資料清洗，避免 popup 直接吃進原始 HTML 內容
+- popup 內容輸出前逐欄位 escape，資料不會被當成 HTML 執行
 - 環境變數檢查與 API 格式基本防呆
 
 ## 當前架構重點
@@ -69,8 +71,11 @@
 - `stores/pharmacy.ts` 集中管理資料載入、篩選條件、排序條件、搜尋字串與目前選取藥局
 - `composables/useMap.ts` 負責 Leaflet instance、marker group、選取高亮與使用者定位標記
 - `components/` 只負責 UI 呈現與事件傳遞，避免把查詢邏輯散落在 template 裡
+- 資料源以 `text/plain` 回傳 JSON，store 以 ofetch 的 `responseType: 'json'` 強制解析
 
 ## 開始使用
+
+需求：Node.js 22（22.12 以上）或 24。pnpm 版本由 corepack 依 `package.json` 的 `packageManager` 自動切換（第一次使用先執行 `corepack enable`）。
 
 ```bash
 # 安裝依賴
@@ -90,6 +95,9 @@ pnpm lint
 
 # Type check
 pnpm type-check
+
+# 單元測試
+pnpm test
 ```
 
 ## 環境變數
@@ -110,10 +118,12 @@ src/
 ├── types/
 │   └── index.ts               # TypeScript 介面：PharmacyFeature, TaiwanCity, PharmacySort
 ├── stores/
-│   └── pharmacy.ts            # Pinia store：藥局資料、搜尋/篩選/排序、選取狀態
+│   ├── pharmacy.ts            # Pinia store：藥局資料、搜尋/篩選/排序、選取狀態
+│   └── __tests__/             # store 單元測試
 ├── composables/
 │   ├── useMap.ts              # Leaflet 地圖邏輯（markers 管理、選取高亮）
-│   └── useGeolocation.ts      # 瀏覽器 Geolocation API
+│   ├── useGeolocation.ts      # 瀏覽器 Geolocation API
+│   └── __tests__/             # popup escape 測試
 └── components/
     ├── AppHeader.vue          # 標題列 + 定位按鈕 + 手機版清單切換
     ├── PharmacySidebar.vue    # 側邊欄 / 手機版底部面板容器
@@ -128,9 +138,11 @@ src/
 
 - `pnpm lint`
 - `pnpm type-check`
+- `pnpm test`
 - `pnpm build`
+- `pnpm audit`
 
-目前上述檢查皆可通過，代表 Vue 3 + Vite 8 + TypeScript 6 的基本建置鏈已經穩定。
+2026-10 升級（pnpm 12、Pinia 4、Vitest 5）後上述檢查皆可通過，`pnpm audit` 為 0 筆。
 
 ## Roadmap
 
@@ -149,7 +161,7 @@ src/
 - [ ] 加入資料快取與最後同步時間
 - [ ] 針對 API 失敗提供 fallback 策略
 - [ ] 將 query state 和 data state 做更清楚的切分
-- [ ] 補上 store / composable 測試
+- [ ] 補上 store / composable 測試（store 與 popup 已完成）
 
 ### Phase 3: 作品集等級功能
 
@@ -164,7 +176,7 @@ src/
 
 ### 近期優先
 
-- [ ] 補測試基礎設施（Vitest + Vue Test Utils）
+- [x] 補測試基礎設施（Vitest 5 + happy-dom；元件測試用的 Vue Test Utils 尚未導入）
 - [ ] 為 API response 建立明確 schema 驗證
 - [ ] 補 `last updated` 顯示與資料快取
 - [ ] README 加入實際畫面截圖
@@ -183,9 +195,10 @@ src/
 | axios CRITICAL CVEs (SSRF/DoS) | 改用 ofetch |
 | Vue 2 EOL | 升級 Vue 3 |
 | node-sass 廢棄 | 改用 Tailwind CSS v4 |
-| Leaflet bindPopup XSS | store ingestion 時 strip HTML tags |
+| Leaflet bindPopup XSS | `buildPopup` 輸出前逐欄位 escape（store 的去標籤只是顯示清理，擋不住未閉合的 tag） |
 | cdn.rawgit.com 已關閉 | marker icons 本地化至 `/public/markers/` |
 | npm taobao SHA-1 hashes | 全新 pnpm-lock.yaml（官方 registry） |
+| 相依套件 audit 告警（vite、postcss、brace-expansion 等 24 筆） | 2026-10 升級至最新版並重新解析相依，`pnpm audit` 為 0 |
 
 ## 資料來源
 

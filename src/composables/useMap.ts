@@ -16,16 +16,29 @@ const icons = {
   grey: new L.Icon({ iconUrl: MARKER_ICONS.grey, ...iconConfig }),
 }
 
-function buildPopup(p: PharmacyProperties): string {
+const HTML_ESCAPES: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (ch) => HTML_ESCAPES[ch])
+}
+
+// Leaflet renders popup strings via innerHTML, so every data field must be escaped here.
+export function buildPopup(p: PharmacyProperties): string {
   const adult = Number.isFinite(p.mask_adult) ? `${p.mask_adult} 個` : '未取得資料'
   const child = Number.isFinite(p.mask_child) ? `${p.mask_child} 個` : '未取得資料'
   const mapsUrl = `https://www.google.com.tw/maps/place/${encodeURIComponent(p.address)}`
   return [
-    `<strong>${p.name}</strong>`,
+    `<strong>${escapeHtml(p.name)}</strong>`,
     `口罩剩餘：<strong>成人 ${adult} / 兒童 ${child}</strong>`,
-    `地址：<a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${p.address}</a>`,
-    `電話：${p.phone}`,
-    `<small>最後更新：${p.updated}</small>`,
+    `地址：<a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.address)}</a>`,
+    `電話：${escapeHtml(p.phone)}`,
+    `<small>最後更新：${escapeHtml(p.updated)}</small>`,
   ].join('<br>')
 }
 

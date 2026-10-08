@@ -1,7 +1,8 @@
+import { defineConfig } from 'eslint/config'
 import pluginVue from 'eslint-plugin-vue'
 import tseslint from 'typescript-eslint'
 
-export default tseslint.config(
+export default defineConfig(
   ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
   {

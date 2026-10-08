@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { useId } from 'vue'
 import { storeToRefs } from 'pinia'
 import { usePharmacyStore } from '@/stores/pharmacy'
+
+// Rendered twice (desktop sidebar + mobile sheet), so ids must be unique per instance.
+const citySelectId = useId()
+const areaSelectId = useId()
 
 const store = usePharmacyStore()
 const {
@@ -23,11 +28,11 @@ function onCityChange() {
   <div class="p-3 bg-white border-b border-gray-200 shrink-0">
     <div class="flex items-center gap-2 mb-2">
       <label
-        for="citySelect"
+        :for="citySelectId"
         class="w-10 text-sm font-medium text-gray-600 shrink-0"
       >縣市</label>
       <select
-        id="citySelect"
+        :id="citySelectId"
         v-model="selectedCity"
         class="flex-1 text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-green-400 disabled:opacity-50 bg-white"
         :disabled="isLoading"
@@ -47,11 +52,11 @@ function onCityChange() {
     </div>
     <div class="flex items-center gap-2">
       <label
-        for="areaSelect"
+        :for="areaSelectId"
         class="w-10 text-sm font-medium text-gray-600 shrink-0"
       >地區</label>
       <select
-        id="areaSelect"
+        :id="areaSelectId"
         v-model="selectedArea"
         class="flex-1 text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-green-400 disabled:opacity-50 bg-white"
         :disabled="isLoading || !selectedCity"
